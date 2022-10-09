@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+option go_package = "./protobuf";
+package users;
+
+message Event {
+  string id=1;
+  string date = 2;
+  string title = 3;
+  string time = 4;
+}
+
+message User {
+  int32 uid = 1;
+  string name = 2;
+  string email = 3;
+  string password = 4;
+  repeated Event events = 5;
+}
+
+message LoginRequest{
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse{
+  User user = 1;
+}
+
+message SignupRequest {
+  User user = 1;
+}
+
+message SignupResponse {
+  User user = 1;
+}
+
+message CreateEventRequest {
+  int32 uid = 1;
+  Event event = 2;
+}
+
+message CreateEventResponse {
+  int32 uid = 1;
+  Event event = 2;
+}
+
+message DeleteEventRequest {
+  int32 uid = 1;
+  string id = 2;
+}
+
+message DeleteEventResponse {
+  int32 uid = 1;
+  string id = 2;
+}
+
+service UserService {
+  rpc Signup(SignupRequest) returns (SignupResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc CreateEvent(CreateEventRequest) returns (CreateEventResponse);
+  rpc DeleteEvent(DeleteEventRequest) returns (DeleteEventResponse);
+}
